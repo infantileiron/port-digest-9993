@@ -38,3 +38,19 @@ class PreviewInput(BaseModel):
  report_day:date
  station:Literal['全部','北站','南站','东港']='全部'
 class ReviewInput(BaseModel):note:str=Field(min_length=5,max_length=2000)
+class ManifestInput(BaseModel):
+ station:Literal['北站','南站','东港']
+ report_day:date
+ codes:list[str]=Field(min_length=1,max_length=500)
+ note:str=Field(default='',max_length=1000)
+ @field_validator('codes')
+ @classmethod
+ def tidy(cls,v):
+  cleaned=[c.strip() for c in v if c and c.strip()]
+  if not cleaned:raise ValueError('应到清单至少需要一条班次编号')
+  if any(len(c)>60 for c in cleaned):raise ValueError('班次编号不能超过60字符')
+  return cleaned
+ @model_validator(mode='after')
+ def unique(self):
+  if len(set(self.codes))!=len(self.codes):raise ValueError('同一清单内班次编号不能重复')
+  return self

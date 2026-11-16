@@ -1,3 +1,9 @@
-/** @typedef {{id:number,code:string,station:string,planned_at:string,actual_at:string|null,note:string}} Arrival */
+/** @typedef {{id:number,code:string,station:string,planned_at:string,actual_at:string|null,note:string,revision:number}} Arrival */
 /** @typedef {{id:number,name:string,station:string,daily_at:string,recipient:string,enabled:boolean,next_run_at:string}} Subscription */
 /** @typedef {{id:number,subscription_id:number,report_day:string,state:string,payload:object,review_note:string}} Receipt */
+/** @typedef {{id:number,station:string,report_day:string,version:number,status:string,items:string[],checksum:string,item_count:number,created_by:string,created_at:string,reconciled_at:string|null}} Manifest */
+/** @typedef {{id:number,manifest_id:number,station:string,report_day:string,manifest_version:number,status:string,manifest_checksum:string,ledger_checksum:string,manifest_total:number,ledger_total:number,matched:number,completed:number,missing:number,pending:number,unplanned:number,balanced:boolean,checked_by:string,checked_at:string,invalidated_at:string|null,invalid_reason:string}} Reconciliation */
+/** @typedef {{category:'missing'|'pending'|'unplanned',code:string,station:string,reason:string}} BlockingShift */
+/** @typedef {{id:number,subscription_id:number,report_day:string,state:string,reason:string,blocking:BlockingShift[],attempts:number,receipt_id:number|null}} Gate */
+/** @typedef {{station:string,state:'waiting'|'ready'|'blocked',ready:boolean,manifest:object|null,counts:object|null,blocking:BlockingShift[],reason:string}} StationStatus */
+/** @typedef {{report_day:string,subscriptions:Array<{subscription_id:number,name:string,station:string,state:string,ready:boolean,reason:string,stations:StationStatus[],blocking:BlockingShift[],receipt_id:number|null}>}} GateBoard */
