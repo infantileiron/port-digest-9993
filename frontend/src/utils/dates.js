@@ -1,0 +1,1 @@
+export const local=v=>v?new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',dateStyle:'short',timeStyle:'medium'}).format(new Date(v)):'未到发';export const numeric=v=>v===null||v===undefined?'未定义':Number(v).toFixed(2);export const withZone=v=>v?v+'+08:00':null;
